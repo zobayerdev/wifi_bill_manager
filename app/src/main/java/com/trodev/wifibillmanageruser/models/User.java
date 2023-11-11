@@ -1,4 +1,4 @@
-package com.trodev.wifibillmanageruser;
+package com.trodev.wifibillmanageruser.models;
 
 public class User {
 

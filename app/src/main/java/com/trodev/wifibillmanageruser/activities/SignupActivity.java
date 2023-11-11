@@ -1,4 +1,4 @@
-package com.trodev.wifibillmanageruser;
+package com.trodev.wifibillmanageruser.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.trodev.wifibillmanageruser.activities.LoginActivity;
+import com.trodev.wifibillmanageruser.MainActivity;
+import com.trodev.wifibillmanageruser.R;
+import com.trodev.wifibillmanageruser.models.StatusModel;
+import com.trodev.wifibillmanageruser.models.User;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -43,7 +43,7 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".activities.SignupActivity"
             android:exported="true" />
         <activity
             android:name=".activities.LoginActivity"
