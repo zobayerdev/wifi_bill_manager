@@ -29,6 +29,11 @@
         android:theme="@style/Theme.WifiBillManagerUser"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".PrivacyActivity"
+            android:exported="true"
+            />
         <activity
             android:name=".PackagesActivity"
             android:exported="false"
@@ -41,7 +46,7 @@
             android:name=".SignupActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,6 +54,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

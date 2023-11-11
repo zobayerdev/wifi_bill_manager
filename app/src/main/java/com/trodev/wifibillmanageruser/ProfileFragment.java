@@ -1,6 +1,7 @@
 package com.trodev.wifibillmanageruser;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,23 +19,28 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.trodev.wifibillmanageruser.activities.LoginActivity;
 
 
 public class ProfileFragment extends Fragment {
 
     private FirebaseUser user;
-    private DatabaseReference reference;
+    private DatabaseReference reference, ref;
     private String userID;
     ImageView logout;
 
     /*linear layout declare*/
-    LinearLayout contactLl, console_ll, userLl;
+    LinearLayout contactLl, console_ll, rateLl, shareLl, privacyLl;
     LottieAnimationView loading_anim;
+    TextView user_status;
+    DatabaseReference mDatabase;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -55,7 +61,7 @@ public class ProfileFragment extends Fragment {
         loading_anim = view.findViewById(R.id.loading_anim);
         loading_anim.loop(true);
 
-
+        /*init views*/
         TextView nameET = view.findViewById(R.id.nameEt);
         TextView emailET = view.findViewById(R.id.emailTv);
         TextView numberET = view.findViewById(R.id.mobileTv);
@@ -63,6 +69,7 @@ public class ProfileFragment extends Fragment {
         TextView packages = view.findViewById(R.id.packagesTv);
         TextView user_token = view.findViewById(R.id.uidTv);
         TextView nid = view.findViewById(R.id.nidTv);
+        user_status = view.findViewById(R.id.statusTv);
         LinearLayout infoLl = view.findViewById(R.id.infoLl);
         infoLl.setVisibility(View.INVISIBLE);
 
@@ -98,6 +105,8 @@ public class ProfileFragment extends Fragment {
                     /*toast sms*/
                     Toast.makeText(getActivity(), uname + " your data found", Toast.LENGTH_SHORT).show();
 
+                    /*status call*/
+                    status_call();
                 }
             }
 
@@ -108,6 +117,8 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
+        /*log out  segment*/
         logout = view.findViewById(R.id.logout_btn);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,10 +130,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        /*init views*/
+        /*init under layout views*/
         contactLl = view.findViewById(R.id.contactLl);
         console_ll = view.findViewById(R.id.console_ll);
-        userLl = view.findViewById(R.id.userLl);
+        rateLl = view.findViewById(R.id.rateLl);
+        shareLl = view.findViewById(R.id.shareLl);
+        privacyLl = view.findViewById(R.id.privacyLl);
+
 
         contactLl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,20 +152,86 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        userLl.setOnClickListener(new View.OnClickListener() {
+
+        rateLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                go_to_user();
+                rateUsOnGooglePlay();
+            }
+        });
+
+        shareLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                share_apps();
+            }
+        });
+
+        privacyLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), PrivacyActivity.class));
             }
         });
 
         return view;
     }
 
-    private void go_to_user() {
+    private void status_call() {
 
-        // startActivity(new Intent(getContext(), UserListActivity.class));
+        /*show single value from database*/
+        ref = FirebaseDatabase.getInstance().getReference("user_status");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                    String statusTv = snapshot.child("status").getValue().toString();
+                    user_status.setText("Status: " + statusTv);
+
+                    String status = statusTv;
+
+                    if (status.equals("Inactive")) {
+                        user_status.setTextColor(Color.parseColor("#FF0004"));
+                    } else if (status.equals("Active")) {
+                        user_status.setTextColor(Color.parseColor("#008937"));
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void share_apps() {
+
+        int applicationNameId = getContext().getApplicationInfo().labelRes;
+        final String appPackageName = getContext().getPackageName();
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_SUBJECT, getActivity().getString(applicationNameId));
+        String text = "Wi-Fi Bill Manager";
+        String link = "https://play.google.com/store/apps/details?id=" + appPackageName;
+        i.putExtra(Intent.EXTRA_TEXT, text + " " + link);
+        startActivity(Intent.createChooser(i, "choose share options"));
+
+    }
+
+    public void rateUsOnGooglePlay() {
+
+        Uri marketUri = Uri.parse("https://play.google.com/store/apps/details?id=" + getActivity().getPackageName());
+        try {
+            getContext().startActivity(new Intent(Intent.ACTION_VIEW, marketUri));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getContext(), "Couldn't find PlayStore on this device", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

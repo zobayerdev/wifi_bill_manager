@@ -167,6 +167,17 @@
                     android:textSize="11sp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/statusTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:text="Status"
+                    android:textColor="@color/color_8"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -202,7 +213,6 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
-
 
 
             </LinearLayout>
@@ -272,6 +282,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/privacyLl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -311,6 +322,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/shareLl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -350,7 +362,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/userLl"
+        android:id="@+id/rateLl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"

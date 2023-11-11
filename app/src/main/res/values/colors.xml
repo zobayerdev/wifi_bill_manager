@@ -6,7 +6,7 @@
     <color name="green">#4CAF50</color>
 
     <!--apps color first-->
-    <color name="color_1">#EE2E31</color>
+    <color name="color_1">#FF0004</color>
     <color name="color_2">#F4C095</color>
     <color name="color_3">#679289</color>
     <color name="color_4">#1D7874</color>
@@ -15,7 +15,8 @@
     <color name="color_7">#077cff</color>
 
     <!--apps color second-->
-    <color name="color_8">#FF5722</color>
+<!--    <color name="color_8">#FF5722</color>-->
+    <color name="color_8">#FF000000</color>
     <color name="color_9">#A9C3B6</color>
     <color name="color_10">#CEDFDF</color>
     <color name="color_11">#B7D1D3</color>

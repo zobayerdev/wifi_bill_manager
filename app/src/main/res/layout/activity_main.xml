@@ -23,15 +23,14 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_alignParentBottom="true"
-            app:backgroundColor="@color/color_8"
+            app:backgroundColor="@color/white"
             app:cornerRadius="15dp"
-            app:iconTint="@color/white"
-            app:iconTintActive="@color/white"
+            app:iconTint="@color/black"
+            app:iconTintActive="@color/black"
             app:itemFontFamily="@font/poppins_regular"
             app:menu="@menu/menu"
-            app:textColor="@color/white" />
+            app:textColor="@color/black" />
 
     </RelativeLayout>
-
 
 </androidx.drawerlayout.widget.DrawerLayout>
