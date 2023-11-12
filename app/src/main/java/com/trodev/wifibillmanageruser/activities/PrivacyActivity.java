@@ -1,9 +1,11 @@
-package com.trodev.wifibillmanageruser;
+package com.trodev.wifibillmanageruser.activities;
 
 import android.os.Bundle;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.trodev.wifibillmanageruser.R;
 
 public class PrivacyActivity extends AppCompatActivity {
 

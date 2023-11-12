@@ -248,20 +248,24 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         String time = currentTime.format(calForTime.getTime());
 
 
-        String Key = databaseReference.push().getKey();
+        /*set data on user_status*/
+        StatusModel statusModel = new StatusModel(status, name, number, user_token, packages, date, time, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(statusModel);
 
+/*        String Key = databaseReference.push().getKey();
         if (Key != null) {
 
             StatusModel statusModel = new StatusModel(Key, status, name, number, user_token, packages, date, time, FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-            /*these data save on new uid and also user id*/
-            /*these data save on user id*/
+            *//*these data save on new uid and also user id*//*
+            *//*these data save on user id*//*
             databaseReference.child(Key).setValue(statusModel);
+
 
             Toast.makeText(this, "user activation successful", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "something went wrong", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
 
     }

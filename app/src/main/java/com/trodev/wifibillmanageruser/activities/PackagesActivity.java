@@ -1,8 +1,10 @@
-package com.trodev.wifibillmanageruser;
+package com.trodev.wifibillmanageruser.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.trodev.wifibillmanageruser.R;
 
 public class PackagesActivity extends AppCompatActivity {
 

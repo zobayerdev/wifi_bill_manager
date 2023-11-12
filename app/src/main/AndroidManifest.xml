@@ -31,11 +31,11 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".PrivacyActivity"
+            android:name=".activities.PrivacyActivity"
             android:exported="true"
             />
         <activity
-            android:name=".PackagesActivity"
+            android:name=".activities.PackagesActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity"
             />

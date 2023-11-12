@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,18 +25,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.trodev.wifibillmanageruser.PrivacyActivity;
+import com.trodev.wifibillmanageruser.activities.PrivacyActivity;
 import com.trodev.wifibillmanageruser.R;
+import com.trodev.wifibillmanageruser.models.StatusModel;
 import com.trodev.wifibillmanageruser.activities.LoginActivity;
 import com.trodev.wifibillmanageruser.models.User;
 
 
 public class ProfileFragment extends Fragment {
 
-    private FirebaseUser user;
-    private DatabaseReference reference, ref;
-    private String userID;
+     FirebaseUser user;
+     DatabaseReference reference, ref;
+     String userID;
     ImageView logout;
+    ShapeableImageView user_image;
 
     /*linear layout declare*/
     LinearLayout contactLl, console_ll, rateLl, shareLl, privacyLl;
@@ -54,10 +57,6 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
-        userID = user.getUid();
-
         /*lottie anim init*/
         loading_anim = view.findViewById(R.id.loading_anim);
         loading_anim.loop(true);
@@ -71,9 +70,16 @@ public class ProfileFragment extends Fragment {
         TextView user_token = view.findViewById(R.id.uidTv);
         TextView nid = view.findViewById(R.id.nidTv);
         user_status = view.findViewById(R.id.statusTv);
+        user_image = view.findViewById(R.id.user_image);
+
         LinearLayout infoLl = view.findViewById(R.id.infoLl);
         infoLl.setVisibility(View.INVISIBLE);
 
+
+        /*database location and get user uid*/
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -180,25 +186,30 @@ public class ProfileFragment extends Fragment {
 
     private void status_call() {
 
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        userID = user.getUid();
+
         /*show single value from database*/
         ref = FirebaseDatabase.getInstance().getReference("user_status");
-        ref.addValueEventListener(new ValueEventListener() {
+        ref.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                StatusModel userProfile = snapshot.getValue(StatusModel.class);
+                if (userProfile != null) {
 
-                    String statusTv = snapshot.child("status").getValue().toString();
-                    user_status.setText("Status: " + statusTv);
-
-                    String status = statusTv;
+                    String status = userProfile.getStatus();
+                    user_status.setText("Status: " + status);
 
                     if (status.equals("Inactive")) {
                         user_status.setTextColor(Color.parseColor("#FF0004"));
+                        user_image.setBackgroundColor(Color.parseColor("#FF0004"));
                     } else if (status.equals("Active")) {
                         user_status.setTextColor(Color.parseColor("#008937"));
+                        user_image.setBackgroundColor(Color.parseColor("#008937"));
                     }
 
+                    Toast.makeText(getContext(), "You are " + status + " in our network" , Toast.LENGTH_SHORT).show();
                 }
             }
 

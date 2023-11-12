@@ -2,13 +2,13 @@ package com.trodev.wifibillmanageruser.models;
 
 public class StatusModel {
 
-    String aid, status, name, mobile, user_token, packages, date, time, uid;
+    String status, name, mobile, user_token, packages, date, time, uid;
 
     public StatusModel() {
     }
 
-    public StatusModel(String aid, String status, String name, String mobile, String user_token, String packages, String date, String time, String uid) {
-        this.aid = aid;
+    public StatusModel( String status, String name, String mobile, String user_token, String packages, String date, String time, String uid) {
+
         this.status = status;
         this.name = name;
         this.mobile = mobile;
@@ -17,14 +17,6 @@ public class StatusModel {
         this.date = date;
         this.time = time;
         this.uid = uid;
-    }
-
-    public String getAid() {
-        return aid;
-    }
-
-    public void setAid(String aid) {
-        this.aid = aid;
     }
 
     public String getStatus() {

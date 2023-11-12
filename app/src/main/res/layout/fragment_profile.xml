@@ -220,6 +220,7 @@
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/user_image"
             android:layout_width="98dp"
             android:layout_height="98dp"
             android:layout_centerHorizontal="true"
