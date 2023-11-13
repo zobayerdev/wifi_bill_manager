@@ -34,9 +34,9 @@ import com.trodev.wifibillmanageruser.models.User;
 
 public class ProfileFragment extends Fragment {
 
-     FirebaseUser user;
-     DatabaseReference reference, ref;
-     String userID;
+    FirebaseUser user;
+    DatabaseReference reference, ref;
+    String userID;
     ImageView logout;
     ShapeableImageView user_image;
 
@@ -44,7 +44,6 @@ public class ProfileFragment extends Fragment {
     LinearLayout contactLl, console_ll, rateLl, shareLl, privacyLl;
     LottieAnimationView loading_anim;
     TextView user_status;
-    DatabaseReference mDatabase;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -209,7 +208,7 @@ public class ProfileFragment extends Fragment {
                         user_image.setBackgroundColor(Color.parseColor("#008937"));
                     }
 
-                    Toast.makeText(getContext(), "You are " + status + " in our network" , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "You are " + status + " in our network", Toast.LENGTH_SHORT).show();
                 }
             }
 

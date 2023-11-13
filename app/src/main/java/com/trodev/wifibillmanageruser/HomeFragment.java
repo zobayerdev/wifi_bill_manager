@@ -44,6 +44,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        return  view;
+        billHistoryMc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), BillPayActivity.class));
+            }
+        });
+
+        return view;
     }
 }
