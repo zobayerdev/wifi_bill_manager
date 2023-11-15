@@ -1,12 +1,17 @@
-package com.trodev.wifibillmanageruser;
+package com.trodev.wifibillmanageruser.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +26,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.trodev.wifibillmanageruser.R;
+import com.trodev.wifibillmanageruser.models.BillModels;
 import com.trodev.wifibillmanageruser.models.StatusModel;
 import com.trodev.wifibillmanageruser.models.User;
 
@@ -38,6 +45,8 @@ public class BillPayActivity extends AppCompatActivity {
     MaterialButton payBtn;
     DatabaseReference databaseReference;
     ImageView circleIv;
+
+    AutoCompleteTextView autoCompleteTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +71,7 @@ public class BillPayActivity extends AppCompatActivity {
 
         /*image view init*/
         circleIv = findViewById(R.id.circleIv);
+
 
         /*lottie anim init*/
         loading_anim = findViewById(R.id.loading_anim);
@@ -107,6 +117,21 @@ public class BillPayActivity extends AppCompatActivity {
             }
         });
 
+        /*adapter view*/
+        String[] type = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, R.layout.drop_down_list, type
+        );
+
+        autoCompleteTextView = findViewById(R.id.filled_exposed);
+        autoCompleteTextView.setAdapter(adapter);
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(BillPayActivity.this, autoCompleteTextView.getText().toString() + " select", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         /*click event*/
         payBtn.setOnClickListener(new View.OnClickListener() {
@@ -127,33 +152,45 @@ public class BillPayActivity extends AppCompatActivity {
                 .getInstance()
                 .getReference("user_bill");
 
-        String name, number, user_token, packages;
+        String name, number, user_token, packages, month;
 
         name = nameEt.getText().toString().trim();
         number = numberEt.getText().toString().trim();
         user_token = uidEt.getText().toString().trim();
         packages = packagesEt.getText().toString().trim();
+        month = autoCompleteTextView.getText().toString().trim();
 
-        Calendar calForDate = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
-        String date = currentDate.format(calForDate.getTime());
-
-        Calendar calForTime = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
-        String time = currentTime.format(calForTime.getTime());
-
-        String key = databaseReference.push().getKey();
-
-
-        if (key != null) {
-            /*set data on user_status*/
-            BillModels billModels = new BillModels(key, name, number, user_token, packages, date, time, FirebaseAuth.getInstance().getCurrentUser().getUid());
-            databaseReference.child(key).setValue(billModels);
-            Toast.makeText(this, "Bill Payment Complete", Toast.LENGTH_SHORT).show();
+        if (month.isEmpty()) {
+            autoCompleteTextView.setError("please select month");
+            autoCompleteTextView.requestFocus();
         } else {
-            Toast.makeText(this, "something went wrong", Toast.LENGTH_SHORT).show();
-        }
 
+
+            Calendar calForDate = Calendar.getInstance();
+            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+            String date = currentDate.format(calForDate.getTime());
+
+            Calendar calForYear = Calendar.getInstance();
+            SimpleDateFormat currentYear = new SimpleDateFormat("yyyy");
+            String year = currentYear.format(calForYear.getTime());
+
+            Calendar calForTime = Calendar.getInstance();
+            SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+            String time = currentTime.format(calForTime.getTime());
+
+            String key = databaseReference.push().getKey();
+
+
+            if (key != null) {
+                /*set data on user_status*/
+                BillModels billModels = new BillModels(key, name, user_token, packages, number, month, date, time, year,  FirebaseAuth.getInstance().getCurrentUser().getUid());
+                databaseReference.child(key).setValue(billModels);
+                Toast.makeText(this, "Bill Payment Complete", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "something went wrong", Toast.LENGTH_SHORT).show();
+            }
+
+        }
 
     }
 
@@ -201,6 +238,26 @@ public class BillPayActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_bill, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_bill) {
+
+            Toast.makeText(this, "Bill Receipt History", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(BillPayActivity.this, BillHistoryActivity.class));
+
+        }
+        return true;
     }
 
 }

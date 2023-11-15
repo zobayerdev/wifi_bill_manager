@@ -6,12 +6,12 @@
         android:id="@+id/images_item_scan"
         android:icon="@drawable/barcode_scanner"
         android:title="Scan from camera"
-        app:showAsAction="always" />
+        app:showAsAction="always" />-->
 
     <item
-        android:id="@+id/gallery_item_scan"
-        android:icon="@drawable/gallery_nav"
-        android:title="Scan from gallery"
-        app:showAsAction="always" />-->
+        android:id="@+id/menu_bill"
+        android:icon="@drawable/ic_bill_recept"
+        android:title="Bill Receipt"
+        app:showAsAction="always" />
 
 </menu>

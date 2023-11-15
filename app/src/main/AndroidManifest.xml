@@ -6,11 +6,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -30,9 +28,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".BillPayActivity"
-            android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:name=".activities.ReceiptGeneratorActivity"
+            android:exported="true"
+            android:parentActivityName=".activities.BillHistoryActivity"/>
+        <activity
+            android:name=".activities.BillHistoryActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".activities.BillPayActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".activities.PrivacyActivity"
             android:exported="true" />

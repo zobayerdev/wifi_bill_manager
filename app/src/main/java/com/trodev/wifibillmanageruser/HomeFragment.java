@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.card.MaterialCardView;
+import com.trodev.wifibillmanageruser.activities.BillHistoryActivity;
+import com.trodev.wifibillmanageruser.activities.BillPayActivity;
 import com.trodev.wifibillmanageruser.activities.PackagesActivity;
 
 
@@ -44,10 +46,38 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        billHistoryMc.setOnClickListener(new View.OnClickListener() {
+        monthlyMc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        payMc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), BillPayActivity.class));
+            }
+        });
+
+        billHistoryMc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), BillHistoryActivity.class));
+            }
+        });
+
+        locationMc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        supportMc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
