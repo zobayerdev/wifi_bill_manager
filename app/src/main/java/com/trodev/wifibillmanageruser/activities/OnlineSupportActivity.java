@@ -9,9 +9,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,47 +24,46 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.trodev.wifibillmanageruser.R;
-import com.trodev.wifibillmanageruser.models.BillModels;
+import com.trodev.wifibillmanageruser.models.SupportModels;
 import com.trodev.wifibillmanageruser.models.StatusModel;
 import com.trodev.wifibillmanageruser.models.User;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class BillPayActivity extends AppCompatActivity {
+public class OnlineSupportActivity extends AppCompatActivity {
 
-    TextInputEditText nameEt, uidEt, packagesEt, numberEt;
-    TextView statusTv;
+    TextInputEditText nameEt, uidEt, numberEt, problemEt;
+    TextView statusTv, pstatusTv;
     LottieAnimationView loading_anim;
-    MaterialButton payBtn;
+    MaterialButton submitBtn;
     String userID;
     FirebaseUser user;
     DatabaseReference databaseReference;
     DatabaseReference reference, ref;
     ImageView circleIv;
 
-    AutoCompleteTextView autoCompleteTextView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bill_pay);
+        setContentView(R.layout.activity_online_support);
 
         /*back button implement*/
-        getSupportActionBar().setTitle("Pay Bill");
+        getSupportActionBar().setTitle("Online Support");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /*Editext init*/
+        /*Edit text init*/
         nameEt = findViewById(R.id.nameEt);
         uidEt = findViewById(R.id.uidEt);
-        packagesEt = findViewById(R.id.packagesEt);
+        problemEt = findViewById(R.id.problemEt);
         numberEt = findViewById(R.id.numberEt);
 
         /*textview init*/
         statusTv = findViewById(R.id.statusTv);
+        pstatusTv = findViewById(R.id.pstatusTv);
 
         /*button init*/
-        payBtn = findViewById(R.id.payBtn);
+        submitBtn = findViewById(R.id.submitBtn);
 
         /*image view init*/
         circleIv = findViewById(R.id.circleIv);
@@ -97,101 +93,31 @@ public class BillPayActivity extends AppCompatActivity {
 
                     String uname = userProfile.uname;
                     String num = userProfile.num;
-                    String packagess = userProfile.packages;
                     String user_tokes = userProfile.user_token;
 
                     nameEt.setText(uname);
                     uidEt.setText(user_tokes);
                     numberEt.setText(num);
-                    packagesEt.setText(packagess);
-
-                    /*status call*/
-                    status_call();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 loading_anim.setVisibility(View.VISIBLE);
-                Toast.makeText(BillPayActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OnlineSupportActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        /*adapter view*/
-        String[] type = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, R.layout.drop_down_list, type
-        );
-
-        autoCompleteTextView = findViewById(R.id.filled_exposed);
-        autoCompleteTextView.setAdapter(adapter);
-
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(BillPayActivity.this, autoCompleteTextView.getText().toString() + " select", Toast.LENGTH_SHORT).show();
-            }
-        });
+        /*status call*/
+        status_call();
 
         /*click event*/
-        payBtn.setOnClickListener(new View.OnClickListener() {
+        submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bill_payment();
             }
         });
-
-    }
-
-    private void bill_payment() {
-
-        /*when click button then show animation and toast*/
-        Toast.makeText(BillPayActivity.this, "Bill Payment Processing", Toast.LENGTH_SHORT).show();
-
-        databaseReference = FirebaseDatabase
-                .getInstance()
-                .getReference("user_bill");
-
-        String name, number, user_token, packages, month;
-
-        name = nameEt.getText().toString().trim();
-        number = numberEt.getText().toString().trim();
-        user_token = uidEt.getText().toString().trim();
-        packages = packagesEt.getText().toString().trim();
-        month = autoCompleteTextView.getText().toString().trim();
-
-        if (month.isEmpty()) {
-            autoCompleteTextView.setError("please select month");
-            autoCompleteTextView.requestFocus();
-        } else {
-
-
-            Calendar calForDate = Calendar.getInstance();
-            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
-            String date = currentDate.format(calForDate.getTime());
-
-            Calendar calForYear = Calendar.getInstance();
-            SimpleDateFormat currentYear = new SimpleDateFormat("yyyy");
-            String year = currentYear.format(calForYear.getTime());
-
-            Calendar calForTime = Calendar.getInstance();
-            SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
-            String time = currentTime.format(calForTime.getTime());
-
-            String key = databaseReference.push().getKey();
-
-
-            if (key != null) {
-                /*set data on user_status*/
-                BillModels billModels = new BillModels(key, name, user_token, packages, number, month, date, time, year,  FirebaseAuth.getInstance().getCurrentUser().getUid());
-                databaseReference.child(key).setValue(billModels);
-                Toast.makeText(this, "Bill Payment Complete", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "something went wrong", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-
     }
 
     private void status_call() {
@@ -216,15 +142,15 @@ public class BillPayActivity extends AppCompatActivity {
 
                         statusTv.setTextColor(Color.parseColor("#FF0004"));
                         circleIv.setColorFilter(getApplication().getResources().getColor(R.color.red));
-                        Toast.makeText(BillPayActivity.this, "You are " + status + "\nYou can't pay your bill", Toast.LENGTH_SHORT).show();
-                        payBtn.setVisibility(View.INVISIBLE);
+                        Toast.makeText(OnlineSupportActivity.this, "You are " + status + "\nYou can't pay your bill", Toast.LENGTH_SHORT).show();
+                        submitBtn.setVisibility(View.INVISIBLE);
 
                     } else if (status.equals("Active")) {
 
                         statusTv.setTextColor(Color.parseColor("#008937"));
                         circleIv.setColorFilter(getApplication().getResources().getColor(R.color.green));
-                        Toast.makeText(BillPayActivity.this, "You are " + status + "\nYou can pay your bill", Toast.LENGTH_SHORT).show();
-                        payBtn.setVisibility(View.VISIBLE);
+                        Toast.makeText(OnlineSupportActivity.this, "You are " + status + "\nYou can pay your bill", Toast.LENGTH_SHORT).show();
+                        submitBtn.setVisibility(View.VISIBLE);
 
                     }
 
@@ -233,17 +159,66 @@ public class BillPayActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(BillPayActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OnlineSupportActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+    private void bill_payment() {
+
+        /*when click button then show animation and toast*/
+        Toast.makeText(OnlineSupportActivity.this, "Submit Processing", Toast.LENGTH_SHORT).show();
+
+        databaseReference = FirebaseDatabase
+                .getInstance()
+                .getReference("user_problem");
+
+        String name, number, user_token, problem, statusp;
+
+        name = nameEt.getText().toString().trim();
+        number = numberEt.getText().toString().trim();
+        user_token = uidEt.getText().toString().trim();
+        problem = problemEt.getText().toString().trim();
+        statusp = pstatusTv.getText().toString().trim();
+
+        if (problem.isEmpty()) {
+            problemEt.setError("please fill problem");
+            problemEt.requestFocus();
+        } else {
+
+
+            Calendar calForDate = Calendar.getInstance();
+            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+            String date = currentDate.format(calForDate.getTime());
+
+            Calendar calForYear = Calendar.getInstance();
+            SimpleDateFormat currentYear = new SimpleDateFormat("yyyy");
+            String year = currentYear.format(calForYear.getTime());
+
+            Calendar calForTime = Calendar.getInstance();
+            SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+            String time = currentTime.format(calForTime.getTime());
+
+            String key = databaseReference.push().getKey();
+
+
+            if (key != null) {
+                /*set data on user_status*/
+                SupportModels billModels = new SupportModels(key, name, user_token, number, problem, statusp, date, time, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                databaseReference.child(key).setValue(billModels);
+                Toast.makeText(this, "Submit Complete", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "something went wrong", Toast.LENGTH_SHORT).show();
+            }
+
+        }
 
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_bill, menu);
+        getMenuInflater().inflate(R.menu.menu_support, menu);
         return true;
     }
 
@@ -251,11 +226,8 @@ public class BillPayActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.menu_bill) {
-
-            Toast.makeText(this, "Bill Receipt History", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(BillPayActivity.this, BillHistoryActivity.class));
-
+        if (id == R.id.menu_support) {
+            startActivity(new Intent(OnlineSupportActivity.this, SupportListActivity.class));
         }
         return true;
     }

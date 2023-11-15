@@ -110,9 +110,6 @@ public class ProfileFragment extends Fragment {
 
                     /*toast sms*/
                     Toast.makeText(getActivity(), uname + " your data found", Toast.LENGTH_SHORT).show();
-
-                    /*status call*/
-                    status_call();
                 }
             }
 
@@ -122,6 +119,9 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getActivity(), "something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        /*status call*/
+        status_call();
 
 
         /*log out  segment*/
@@ -202,10 +202,10 @@ public class ProfileFragment extends Fragment {
 
                     if (status.equals("Inactive")) {
                         user_status.setTextColor(Color.parseColor("#FF0004"));
-                        user_image.setBackgroundColor(Color.parseColor("#FF0004"));
+                        user_image.setColorFilter(getContext().getResources().getColor(R.color.green));
                     } else if (status.equals("Active")) {
                         user_status.setTextColor(Color.parseColor("#008937"));
-                        user_image.setBackgroundColor(Color.parseColor("#008937"));
+                        user_image.setColorFilter(getContext().getResources().getColor(R.color.green));
                     }
 
                     Toast.makeText(getContext(), "You are " + status + " in our network", Toast.LENGTH_SHORT).show();
