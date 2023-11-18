@@ -55,6 +55,14 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyViewHolder> 
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, ReceiptGeneratorActivity.class);
+                intent.putExtra("name", models.getName());
+                intent.putExtra("package", models.getPackages());
+                intent.putExtra("uid", models.getUser_id());
+                intent.putExtra("date", models.getDate());
+                intent.putExtra("time", models.getTime());
+                intent.putExtra("month", models.getMonth());
+                intent.putExtra("mobile", models.getMobile());
+                intent.putExtra("year", models.getYear());
 
                 context.startActivity(intent);
 
