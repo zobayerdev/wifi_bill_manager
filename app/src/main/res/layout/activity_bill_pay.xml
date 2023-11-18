@@ -222,7 +222,7 @@
                     android:backgroundTint="@color/color_8"
                     android:fontFamily="@font/mulish_semibold"
                     android:padding="10dp"
-                    android:text="Pay Bill"
+                    android:text="Proceed to pay"
                     android:textAllCaps="false"
                     app:cornerRadius="15dp" />
 

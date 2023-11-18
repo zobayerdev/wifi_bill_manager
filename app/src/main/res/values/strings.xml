@@ -13,5 +13,7 @@
     <string name="fifth_heading"><b>\nChildren\'s Information</b>\nAnother part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity. Wi-Fi Bill Manager does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our App, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</string>
     <string name="sixth_heading"><b>\nConsent</b>\nBy using our app, you hereby consent to our Privacy Policy and agree to its Terms and Conditions.</string>
     <string name="apps_name">WIFI Bill Manager (WBM)\nUser Billing Details</string>
+    <string name="notice"><b>টাকা পাঠানোর পরে করনীয়ঃ-</b>\n১। টাকা পাঠানোর পরে Complete Transaction বাটন ক্লিক করে নিশ্চিত করুন আপনার বিল প্রদান সম্পুর্ণ হয়েছ।
+        \n২। যদি আপনি বাটনে ক্লিক না করেন তাহলে আপনার কোন প্রমান স্বরূপ কোন বিল থাকবে নাহ। </string>
 
 </resources>

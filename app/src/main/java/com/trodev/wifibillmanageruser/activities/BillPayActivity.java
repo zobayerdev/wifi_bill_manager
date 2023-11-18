@@ -45,7 +45,6 @@ public class BillPayActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     DatabaseReference reference, ref;
     ImageView circleIv;
-
     AutoCompleteTextView autoCompleteTextView;
 
     @Override
@@ -133,24 +132,19 @@ public class BillPayActivity extends AppCompatActivity {
             }
         });
 
-        /*click event*/
+
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bill_payment();
+
+                send_payment_info();
+
             }
         });
 
     }
 
-    private void bill_payment() {
-
-        /*when click button then show animation and toast*/
-        Toast.makeText(BillPayActivity.this, "Bill Payment Processing", Toast.LENGTH_SHORT).show();
-
-        databaseReference = FirebaseDatabase
-                .getInstance()
-                .getReference("user_bill");
+    private void send_payment_info() {
 
         String name, number, user_token, packages, month;
 
@@ -164,33 +158,16 @@ public class BillPayActivity extends AppCompatActivity {
             autoCompleteTextView.setError("please select month");
             autoCompleteTextView.requestFocus();
         } else {
-
-
-            Calendar calForDate = Calendar.getInstance();
-            SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
-            String date = currentDate.format(calForDate.getTime());
-
-            Calendar calForYear = Calendar.getInstance();
-            SimpleDateFormat currentYear = new SimpleDateFormat("yyyy");
-            String year = currentYear.format(calForYear.getTime());
-
-            Calendar calForTime = Calendar.getInstance();
-            SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
-            String time = currentTime.format(calForTime.getTime());
-
-            String key = databaseReference.push().getKey();
-
-
-            if (key != null) {
-                /*set data on user_status*/
-                BillModels billModels = new BillModels(key, name, user_token, packages, number, month, date, time, year,  FirebaseAuth.getInstance().getCurrentUser().getUid());
-                databaseReference.child(key).setValue(billModels);
-                Toast.makeText(this, "Bill Payment Complete", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "something went wrong", Toast.LENGTH_SHORT).show();
-            }
-
+            Intent intent = new Intent(BillPayActivity.this, BillWebActivity.class);
+            intent.putExtra("name", name);
+            intent.putExtra("number", number);
+            intent.putExtra("uid", user_token);
+            intent.putExtra("package", packages);
+            intent.putExtra("month", month);
+            startActivity(intent);
+            // startActivity(new Intent(BillPayActivity.this, BillWebActivity.class));
         }
+
 
     }
 
