@@ -29,11 +29,13 @@ import com.trodev.wifibillmanageruser.R;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class ReceiptGeneratorActivity extends AppCompatActivity {
 
     String name, user_id, packages, time, date, month, mobile, year;
-    TextView nameTv, uidTv, packagesTv, timeTv, dateTv, monthTv, yearTv,mobileTv;
+    TextView nameTv, uidTv, packagesTv, timeTv, dateTv, monthTv, yearTv,mobileTv, orgTv;
     final static int REQUEST_CODE = 1232;
 
     MaterialCardView infoLl;
@@ -55,6 +57,7 @@ public class ReceiptGeneratorActivity extends AppCompatActivity {
         monthTv = findViewById(R.id.monthTv);
         mobileTv = findViewById(R.id.mobileTv);
         yearTv = findViewById(R.id.yearTv);
+        orgTv = findViewById(R.id.orgTv);
 
         /*card view init*/
         infoLl = findViewById(R.id.infoLl);
@@ -78,6 +81,18 @@ public class ReceiptGeneratorActivity extends AppCompatActivity {
         mobileTv.setText(mobile);
         monthTv.setText(month);
         yearTv.setText("Bill Receipt on "+month +" - " + year);
+
+
+        /*#----------------------- real time date & time -------------------------*/
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
+        String date = currentDate.format(calForDate.getTime());
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+        String time = currentTime.format(calForTime.getTime());
+
+        orgTv.setText(date + " & " + time);
 
         askPermissions();
 

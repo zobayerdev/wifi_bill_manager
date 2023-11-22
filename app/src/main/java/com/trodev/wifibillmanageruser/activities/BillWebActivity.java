@@ -44,7 +44,6 @@ import java.util.Calendar;
 
 public class BillWebActivity extends AppCompatActivity {
 
-
     private static final String TAG = "AndroidRide";
     private static final String TAGS = "Success";
     String success_url = "https://shop.bkash.com/trodev01777614837/pay/payment-success";
@@ -178,13 +177,15 @@ public class BillWebActivity extends AppCompatActivity {
             SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy");
             String date = currentDate.format(calForDate.getTime());
 
+            Calendar calForTime = Calendar.getInstance();
+            SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+            String time = currentTime.format(calForTime.getTime());
+
             Calendar calForYear = Calendar.getInstance();
             SimpleDateFormat currentYear = new SimpleDateFormat("yyyy");
             String year = currentYear.format(calForYear.getTime());
 
-            Calendar calForTime = Calendar.getInstance();
-            SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
-            String time = currentTime.format(calForTime.getTime());
+
 
             String key = databaseReference.push().getKey();
 

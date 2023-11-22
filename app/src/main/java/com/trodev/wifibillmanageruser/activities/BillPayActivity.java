@@ -56,7 +56,7 @@ public class BillPayActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Pay Bill");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        /*Editext init*/
+        /*Edit text init*/
         nameEt = findViewById(R.id.nameEt);
         uidEt = findViewById(R.id.uidEt);
         packagesEt = findViewById(R.id.packagesEt);

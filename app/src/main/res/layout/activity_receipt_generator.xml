@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="ScrollViewSize">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/infoLl"
@@ -330,6 +331,7 @@
                         android:textSize="10sp" />
 
                     <TextView
+                        android:id="@+id/orgTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
