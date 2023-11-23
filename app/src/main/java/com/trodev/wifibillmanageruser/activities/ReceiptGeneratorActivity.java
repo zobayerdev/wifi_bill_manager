@@ -29,15 +29,15 @@ import com.trodev.wifibillmanageruser.R;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ReceiptGeneratorActivity extends AppCompatActivity {
 
-    String name, user_id, packages, time, date, month, mobile, year;
-    TextView nameTv, uidTv, packagesTv, timeTv, dateTv, monthTv, yearTv,mobileTv, orgTv;
+    String name, user_id, packages, time, date, month, mobile, year, price, bill_no;
+    TextView nameTv, uidTv, packagesTv, timeTv, dateTv, monthTv, yearTv, mobileTv, orgTv, priceTv, receiptTv;
     final static int REQUEST_CODE = 1232;
-
     MaterialCardView infoLl;
 
     @Override
@@ -58,6 +58,8 @@ public class ReceiptGeneratorActivity extends AppCompatActivity {
         mobileTv = findViewById(R.id.mobileTv);
         yearTv = findViewById(R.id.yearTv);
         orgTv = findViewById(R.id.orgTv);
+        priceTv = findViewById(R.id.priceTv);
+        receiptTv = findViewById(R.id.receiptTv);
 
         /*card view init*/
         infoLl = findViewById(R.id.infoLl);
@@ -71,6 +73,8 @@ public class ReceiptGeneratorActivity extends AppCompatActivity {
         month = getIntent().getStringExtra("month");
         mobile = getIntent().getStringExtra("mobile");
         year = getIntent().getStringExtra("year");
+        price = getIntent().getStringExtra("price");
+        bill_no = getIntent().getStringExtra("billno");
 
         /*set data on text views*/
         nameTv.setText(name);
@@ -80,7 +84,9 @@ public class ReceiptGeneratorActivity extends AppCompatActivity {
         dateTv.setText(date);
         mobileTv.setText(mobile);
         monthTv.setText(month);
-        yearTv.setText("Bill Receipt on "+month +" - " + year);
+        priceTv.setText(price + " ৳");
+        yearTv.setText("Bill Receipt on " + month + " - " + year);
+        receiptTv.setText(bill_no);
 
 
         /*#----------------------- real time date & time -------------------------*/
@@ -91,6 +97,12 @@ public class ReceiptGeneratorActivity extends AppCompatActivity {
         Calendar calForTime = Calendar.getInstance();
         SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
         String time = currentTime.format(calForTime.getTime());
+
+        /*bill no*/
+/*        Long timeStamp = System.currentTimeMillis()/1000;
+        String currentTimeStamp = timeStamp.toString();
+        receiptTv.setText(currentTimeStamp);*/
+
 
         orgTv.setText(date + " & " + time);
 
@@ -171,8 +183,8 @@ public class ReceiptGeneratorActivity extends AppCompatActivity {
         File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
         /*time wise print*/
-        /*eikhane millisecond ta niye lopping vabe pdf banacche*/
-        long timestamps = System.currentTimeMillis();
+        /*save pdf file on timestamp wise*/
+        long timestamps = System.currentTimeMillis() / 1000;
         String fileName = "WBM_" + timestamps + ".pdf";
 
         File filePath = new File(downloadsDir, fileName);
@@ -184,10 +196,10 @@ public class ReceiptGeneratorActivity extends AppCompatActivity {
             document.close();
             fos.close();
             // PDF conversion successful
-            Toast.makeText(this, "pdf download successful", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Bill download successful", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "pdf download un-successful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bill download un-successful", Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -2,18 +2,18 @@ package com.trodev.wifibillmanageruser.models;
 
 public class StatusModel {
 
-    String status, name, mobile, user_token, packages, date, time, uid;
+    String status, name, mobile, user_token, packages, price,  date, time, uid;
 
     public StatusModel() {
     }
 
-    public StatusModel( String status, String name, String mobile, String user_token, String packages, String date, String time, String uid) {
-
+    public StatusModel(String status, String name, String mobile, String user_token, String packages, String price, String date, String time, String uid) {
         this.status = status;
         this.name = name;
         this.mobile = mobile;
         this.user_token = user_token;
         this.packages = packages;
+        this.price = price;
         this.date = date;
         this.time = time;
         this.uid = uid;
@@ -59,6 +59,14 @@ public class StatusModel {
         this.packages = packages;
     }
 
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
     public String getDate() {
         return date;
     }
@@ -82,4 +90,6 @@ public class StatusModel {
     public void setUid(String uid) {
         this.uid = uid;
     }
+
+
 }

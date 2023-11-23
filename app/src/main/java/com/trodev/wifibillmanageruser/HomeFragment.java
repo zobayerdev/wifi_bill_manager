@@ -36,7 +36,7 @@ public class HomeFragment extends Fragment {
 
     MaterialCardView packagesMc, monthlyMc, payMc, billHistoryMc, locationMc, supportMc;
     LinearLayout infoLl;
-    TextView nameTv, useridTv, packageTv, dateTv, statusTv, appTv;
+    TextView nameTv, useridTv, packageTv, dateTv, statusTv, appTv, priceTv;
     ImageView circleIv;
     String userID;
     FirebaseUser user;
@@ -75,6 +75,7 @@ public class HomeFragment extends Fragment {
         packageTv = view.findViewById(R.id.packageTv);
         dateTv = view.findViewById(R.id.dateTv);
         statusTv = view.findViewById(R.id.statusTv);
+        priceTv = view.findViewById(R.id.priceTv);
 
         appTv = view.findViewById(R.id.appTv);
         appTv.setVisibility(View.VISIBLE);
@@ -88,6 +89,7 @@ public class HomeFragment extends Fragment {
         userID = user.getUid();
 
 
+        /*show user profile data*/
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -105,10 +107,13 @@ public class HomeFragment extends Fragment {
                     String uname = userProfile.uname;
                     String packagess = userProfile.packages;
                     String user_tokes = userProfile.user_token;
+                    String price = userProfile.prices;
+
 
                     nameTv.setText(uname);
                     useridTv.setText(user_tokes);
                     packageTv.setText(packagess);
+                    priceTv.setText(price + " ৳");
                 }
             }
 
@@ -185,7 +190,9 @@ public class HomeFragment extends Fragment {
                 if (userProfile != null) {
 
                     String status = userProfile.getStatus();
+                    String date = userProfile.getDate();
                     statusTv.setText(" Status: " + status);
+                    dateTv.setText(date);
 
                     if (status.equals("Inactive")) {
 

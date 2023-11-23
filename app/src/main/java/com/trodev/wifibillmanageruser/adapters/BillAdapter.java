@@ -46,6 +46,8 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyViewHolder> 
         holder.dateTv.setText(models.getDate() + " & " +models.getTime());
         holder.monthTv.setText(models.getMonth() +" - "+ models.getYear());
         holder.mobileTv.setText(models.getMobile());
+        holder.priceTv.setText(models.getPrice() + " ৳" );
+        holder.billidTv.setText(models.getBill_no());
 
 
         holder.cardView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(),R.anim.slider));
@@ -62,7 +64,9 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyViewHolder> 
                 intent.putExtra("time", models.getTime());
                 intent.putExtra("month", models.getMonth());
                 intent.putExtra("mobile", models.getMobile());
+                intent.putExtra("price", models.getPrice());
                 intent.putExtra("year", models.getYear());
+                intent.putExtra("billno", models.getBill_no());
 
                 context.startActivity(intent);
 
@@ -78,7 +82,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTv, packagesTv, useridTv, mobileTv, monthTv, dateTv ;
+        TextView nameTv, packagesTv, useridTv, mobileTv, monthTv, dateTv, priceTv, billidTv ;
         CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -90,6 +94,8 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.MyViewHolder> 
             mobileTv = itemView.findViewById(R.id.mobileTv);
             monthTv = itemView.findViewById(R.id.monthTv);
             dateTv = itemView.findViewById(R.id.dateTv);
+            priceTv = itemView.findViewById(R.id.priceTv);
+            billidTv = itemView.findViewById(R.id.billidTv);
             cardView = itemView.findViewById(R.id.cardView);
 
         }

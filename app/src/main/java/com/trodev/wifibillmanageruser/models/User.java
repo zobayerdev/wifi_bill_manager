@@ -2,13 +2,12 @@ package com.trodev.wifibillmanageruser.models;
 
 public class User {
 
-    public String uname, num, email, pass, user_token, nid, packages, uid;
+    public  String uname, num, email, pass, user_token, nid, packages, prices, uid;
 
     public User() {
-
     }
 
-    public User(String uname, String num, String email, String pass, String user_token, String nid, String packages) {
+    public User(String uname, String num, String email, String pass, String user_token, String nid, String packages, String prices) {
         this.uname = uname;
         this.num = num;
         this.email = email;
@@ -16,6 +15,8 @@ public class User {
         this.user_token = user_token;
         this.nid = nid;
         this.packages = packages;
+        this.prices = prices;
+        this.uid = uid;
     }
 
     public String getUname() {
@@ -74,4 +75,19 @@ public class User {
         this.packages = packages;
     }
 
+    public String getPrices() {
+        return prices;
+    }
+
+    public void setPrices(String prices) {
+        this.prices = prices;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 }

@@ -49,7 +49,7 @@ public class BillWebActivity extends AppCompatActivity {
     String success_url = "https://shop.bkash.com/trodev01777614837/pay/payment-success";
     String payment_url = "https://shop.bkash.com/trodev01777614837/pay/bdt1/mYstke";
     WebView webview;
-    String name, number, user_token, packages, month;
+    String name, number, user_token, packages, month, price;
     DatabaseReference databaseReference;
     MaterialButton payBtn;
 
@@ -146,7 +146,7 @@ public class BillWebActivity extends AppCompatActivity {
                         /*bill payment*/
                         bill_payment();
                     }
-                }, 30000);
+                }, 10000);
 
             }
         });
@@ -166,6 +166,7 @@ public class BillWebActivity extends AppCompatActivity {
         number = getIntent().getStringExtra("number");
         user_token = getIntent().getStringExtra("uid");
         packages = getIntent().getStringExtra("package");
+        price = getIntent().getStringExtra("price");
         month = getIntent().getStringExtra("month");
 
         if (user_token.isEmpty()) {
@@ -185,14 +186,16 @@ public class BillWebActivity extends AppCompatActivity {
             SimpleDateFormat currentYear = new SimpleDateFormat("yyyy");
             String year = currentYear.format(calForYear.getTime());
 
-
+            /*bill no*/
+            long timeStamp = System.currentTimeMillis()/1000;
+            String currentTimeStamp = Long.toString(timeStamp);
 
             String key = databaseReference.push().getKey();
 
 
             if (key != null) {
                 /*set data on user_status*/
-                BillModels billModels = new BillModels(key, name, user_token, packages, number, month, date, time, year, FirebaseAuth.getInstance().getCurrentUser().getUid());
+                BillModels billModels = new BillModels(key, name, user_token, packages, number, month, price, date, time, year, currentTimeStamp,  FirebaseAuth.getInstance().getCurrentUser().getUid());
                 databaseReference.child(key).setValue(billModels);
                 Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show();
 

@@ -30,7 +30,6 @@ import com.trodev.wifibillmanageruser.models.User;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView loginTv;
@@ -38,7 +37,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     EditText nameET, mobileET, emailET, passET, nidEt, uidEt, packageEt;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
-    AutoCompleteTextView autoCompleteTextView, statusTv;
+    AutoCompleteTextView autoCompleteTextView, statusTv, priceTv;
     DatabaseReference databaseReference;
 
 
@@ -63,10 +62,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         passET = findViewById(R.id.passEt);
         nidEt = findViewById(R.id.nidEt);
         uidEt = findViewById(R.id.uidEt);
+
         progressBar = findViewById(R.id.progressBar);
 
 
-        /*adapter view*/
+        /*Package adapter view*/
         String[] type = {"Minor-500", "Junior-650", "Learner-800", "Basic-1000", "Primary-1200", "Dominant-1500", "Confident-2000", "Positive-2500", "Advance-3000", "Progressive-4000"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, R.layout.drop_down_list, type
@@ -82,7 +82,23 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
-        /*adapter view*/
+        /*Price adapter view*/
+        String[] price_range = {"500", "650", "800", "1000", "1200", "1500", "2000", "2500", "3000", "4000"};
+        ArrayAdapter<String> price_adapter = new ArrayAdapter<>(
+                this, R.layout.drop_down_list, price_range
+        );
+
+        priceTv = findViewById(R.id.priceTv);
+        priceTv.setAdapter(price_adapter);
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(SignupActivity.this, autoCompleteTextView.getText().toString() + " select", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*status adapter view*/
         String[] types = {"Active", "Inactive"};
         ArrayAdapter<String> adapters = new ArrayAdapter<>(
                 this, R.layout.drop_down_list, types
@@ -118,7 +134,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     private void registarUser() {
 
-        String name, number, email, pass, nid, user_toke, packages, status;
+        String name, number, email, pass, nid, user_toke, packages, status, price;
+
         name = nameET.getText().toString().trim();
         number = mobileET.getText().toString().trim();
         email = emailET.getText().toString().trim();
@@ -127,6 +144,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         user_toke = uidEt.getText().toString().trim();
         packages = autoCompleteTextView.getText().toString().trim();
         status = statusTv.getText().toString().trim();
+        price = priceTv.getText().toString().trim();
 
         if (name.isEmpty()) {
             nameET.setError("Name is required");
@@ -164,6 +182,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
+        if (price.isEmpty()) {
+            priceTv.setError("Package price is required");
+            priceTv.requestFocus();
+            return;
+        }
+
         if (email.isEmpty()) {
             emailET.setError("E-mail is required");
             emailET.requestFocus();
@@ -196,17 +220,18 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            User user = new User(name, number, email, pass, user_toke, nid, packages);
+                            User user = new User(name, number, email, pass, user_toke, nid, packages, price);
 
                             FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
+
                                                 progressBar.setVisibility(View.GONE);
                                                 Toast.makeText(SignupActivity.this, "User Registration Successful", Toast.LENGTH_SHORT).show();
                                                 startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                                                saveto_user_list();
+                                                save_to_user_list();
                                                 finish();
 
                                             } else {
@@ -225,15 +250,16 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    private void saveto_user_list() {
+    private void save_to_user_list() {
 
         databaseReference = FirebaseDatabase
                 .getInstance()
                 .getReference("user_status");
 
-        String status, name, number, user_token, packages;
+        String status, name, number, user_token, packages, price;
 
         status = statusTv.getText().toString().trim();
+        price = priceTv.getText().toString().trim();
         name = nameET.getText().toString().trim();
         number = mobileET.getText().toString().trim();
         user_token = uidEt.getText().toString().trim();
@@ -249,10 +275,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
 
         /*set data on user_status*/
-        StatusModel statusModel = new StatusModel(status, name, number, user_token, packages, date, time, FirebaseAuth.getInstance().getCurrentUser().getUid());
+        StatusModel statusModel = new StatusModel(status, name, number, user_token, packages, price, date, time, FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(statusModel);
 
-/*        String Key = databaseReference.push().getKey();
+/*    String Key = databaseReference.push().getKey();
         if (Key != null) {
 
             StatusModel statusModel = new StatusModel(Key, status, name, number, user_token, packages, date, time, FirebaseAuth.getInstance().getCurrentUser().getUid());
