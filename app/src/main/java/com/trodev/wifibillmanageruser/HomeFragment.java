@@ -2,6 +2,7 @@ package com.trodev.wifibillmanageruser;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -160,7 +161,7 @@ public class HomeFragment extends Fragment {
         locationMc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                openMap();
             }
         });
 
@@ -172,6 +173,15 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void openMap() {
+        
+        Uri uri = Uri.parse("geo:0, 0?q= 23.912193, 90.400509");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.setPackage("com.google.android.apps.maps");
+        startActivity(intent);
+
     }
 
     private void status_call() {
