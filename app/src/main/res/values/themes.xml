@@ -30,6 +30,14 @@
         <item name="android:fontFamily">@font/poppins_regular</item>
     </style>
 
+    <style name="text_font_family_one" parent="TextAppearance.Design.Tab">
+        <item name="android:fontFamily">@font/helvetica_neue_light</item>
+    </style>
+
+    <style name="text_font_family_two" parent="TextAppearance.Design.Tab">
+        <item name="android:fontFamily">@font/mulish_semibold</item>
+    </style>
+
     <style name="Circular">
         <item name="cornerSize">50%</item>
     </style>

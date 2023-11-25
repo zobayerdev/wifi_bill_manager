@@ -1,4 +1,4 @@
-package com.trodev.wifibillmanageruser.activities;
+package com.trodev.wifibillmanageruser;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +17,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.trodev.wifibillmanageruser.MainActivity;
-import com.trodev.wifibillmanageruser.R;
+import com.trodev.wifibillmanageruser.activities.SignupActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 

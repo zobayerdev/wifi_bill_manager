@@ -27,7 +27,7 @@
             app:cornerRadius="15dp"
             app:iconTint="@color/black"
             app:iconTintActive="@color/black"
-            app:itemFontFamily="@font/poppins_regular"
+            app:itemFontFamily="@font/helvetica_neue_light"
             app:menu="@menu/menu"
             app:textColor="@color/black" />
 

@@ -32,7 +32,6 @@ import com.trodev.wifibillmanageruser.activities.PackagesActivity;
 import com.trodev.wifibillmanageruser.models.StatusModel;
 import com.trodev.wifibillmanageruser.models.User;
 
-
 public class HomeFragment extends Fragment {
 
     MaterialCardView packagesMc, monthlyMc, payMc, billHistoryMc, locationMc, supportMc;
@@ -223,7 +222,6 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getContext(), "something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
-
 
     }
 

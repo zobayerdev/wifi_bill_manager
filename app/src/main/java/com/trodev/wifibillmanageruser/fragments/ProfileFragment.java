@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.trodev.wifibillmanageruser.activities.PrivacyActivity;
 import com.trodev.wifibillmanageruser.R;
 import com.trodev.wifibillmanageruser.models.StatusModel;
-import com.trodev.wifibillmanageruser.activities.LoginActivity;
+import com.trodev.wifibillmanageruser.LoginActivity;
 import com.trodev.wifibillmanageruser.models.User;
 
 

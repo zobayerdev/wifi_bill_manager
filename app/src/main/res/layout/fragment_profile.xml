@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.ProfileFragment">
 
     <LinearLayout
@@ -97,11 +97,10 @@
                 android:id="@+id/loading_anim"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center"
-                app:lottie_rawRes="@raw/loading_two"
-                app:lottie_autoPlay="true"
                 android:layout_above="@+id/infoLl"
-                />
+                android:layout_gravity="center"
+                app:lottie_autoPlay="true"
+                app:lottie_rawRes="@raw/loading_two" />
 
             <LinearLayout
                 android:id="@+id/infoLl"
@@ -181,21 +180,20 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:gravity="center"
                     android:layout_marginBottom="10dp"
-                    >
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <TextView
                         android:id="@+id/packagesTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="Package"
-                        android:layout_weight="0.9"
-                        android:gravity="center"
                         android:layout_marginStart="3dp"
+                        android:layout_weight="0.9"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center"
+                        android:text="Package"
                         android:textColor="@color/color_8"
                         android:textSize="11sp"
                         android:textStyle="bold" />
@@ -204,10 +202,10 @@
                         android:id="@+id/uidTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="User_Id"
-                        android:gravity="center"
                         android:layout_weight="1"
+                        android:fontFamily="@font/poppins_regular"
+                        android:gravity="center"
+                        android:text="User_Id"
                         android:textColor="@color/color_8"
                         android:textSize="11sp"
                         android:textStyle="bold" />
@@ -263,11 +261,10 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_weight="2.7"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@style/text_font_family_one"
             android:text="Contact us"
             android:textColor="@color/color_6"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="17sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -303,11 +300,10 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_weight="2.7"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@style/text_font_family_one"
             android:text="Privacy"
             android:textColor="@color/color_6"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="17sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -343,11 +339,10 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_weight="2.7"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@style/text_font_family_one"
             android:text="Share"
             android:textColor="@color/color_6"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="17sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -383,11 +378,10 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_weight="2.7"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@style/text_font_family_one"
             android:text="Rate us"
             android:textColor="@color/color_6"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="17sp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -423,11 +417,10 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:layout_weight="2.7"
-            android:fontFamily="@font/poppins_semibold"
+            android:fontFamily="@style/text_font_family_one"
             android:text="Our app"
             android:textColor="@color/color_6"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="17sp" />
 
         <ImageView
             android:layout_width="wrap_content"

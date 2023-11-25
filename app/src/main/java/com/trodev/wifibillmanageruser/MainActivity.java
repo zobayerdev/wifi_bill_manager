@@ -27,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         /*init all drawer layout*/
         drawerLayout = findViewById(R.id.drawer_Layout);
+
         // navigationView = findViewById(R.id.navigation_view);
 
         /*init views*/
@@ -74,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.frameLayout, new ProfileFragment());
+                    fragmentTransaction.commit();
+                }
+
+                if (i == 2) {
+                    setTitle("Speed Checker");
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayout, new InternetSpeedFragment());
                     fragmentTransaction.commit();
                 }
 
