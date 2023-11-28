@@ -43,6 +43,7 @@ public class BillPayActivity extends AppCompatActivity {
     ImageView circleIv, circlesIv;
     AutoCompleteTextView autoCompleteTextView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

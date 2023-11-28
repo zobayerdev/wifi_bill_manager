@@ -1,10 +1,12 @@
-package com.trodev.wifibillmanageruser;
+package com.trodev.wifibillmanageruser.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.trodev.wifibillmanageruser.R;
 
 public class SplashActivity extends AppCompatActivity {
 

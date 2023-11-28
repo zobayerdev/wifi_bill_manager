@@ -146,7 +146,7 @@ public class HomeFragment extends Fragment {
         payMc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), BillPayActivity.class));
+                startActivity(new Intent(getContext(), PayBillActivity.class));
             }
         });
 

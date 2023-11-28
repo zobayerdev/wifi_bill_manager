@@ -1,4 +1,4 @@
-package com.trodev.wifibillmanageruser;
+package com.trodev.wifibillmanageruser.fragments;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.trodev.wifibillmanageruser.R;
 
 public class InternetSpeedFragment extends Fragment {
 

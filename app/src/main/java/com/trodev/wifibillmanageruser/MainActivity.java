@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.google.android.material.navigation.NavigationView;
+import com.trodev.wifibillmanageruser.fragments.InternetSpeedFragment;
 import com.trodev.wifibillmanageruser.fragments.ProfileFragment;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
