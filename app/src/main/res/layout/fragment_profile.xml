@@ -279,6 +279,45 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_settings"
+            app:tint="@color/color_8" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_weight="2.7"
+            android:fontFamily="@style/text_font_family_one"
+            android:text="Settings"
+            android:textColor="@color/color_6"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_right_back"
+            app:tint="@color/color_8" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/privacyLl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.trodev.wifibillmanageruser.SettingsActivity;
 import com.trodev.wifibillmanageruser.activities.PrivacyActivity;
 import com.trodev.wifibillmanageruser.R;
 import com.trodev.wifibillmanageruser.models.StatusModel;
@@ -41,7 +42,7 @@ public class ProfileFragment extends Fragment {
     ShapeableImageView user_image;
 
     /*linear layout declare*/
-    LinearLayout contactLl, console_ll, rateLl, shareLl, privacyLl;
+    LinearLayout contactLl, console_ll, rateLl, shareLl, privacyLl, settings;
     LottieAnimationView loading_anim;
     TextView user_status;
 
@@ -142,6 +143,7 @@ public class ProfileFragment extends Fragment {
         rateLl = view.findViewById(R.id.rateLl);
         shareLl = view.findViewById(R.id.shareLl);
         privacyLl = view.findViewById(R.id.privacyLl);
+        settings = view.findViewById(R.id.settings);
 
 
         contactLl.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +179,13 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), PrivacyActivity.class));
+            }
+        });
+
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), SettingsActivity.class));
             }
         });
 

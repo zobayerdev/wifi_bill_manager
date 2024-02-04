@@ -51,18 +51,24 @@ public class BillHistoryActivity extends AppCompatActivity {
     }
 
     private void load_data() {
+
         Query query = reference.orderByChild("uid").equalTo(FirebaseAuth.getInstance().getCurrentUser().getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 list = new ArrayList<>();
                 if (!dataSnapshot.exists()) {
+
                     animationView.setVisibility(View.VISIBLE);
                     Toast.makeText(BillHistoryActivity.this, "no data found", Toast.LENGTH_SHORT).show();
+
                 } else {
+
                     recyclerView.setVisibility(View.VISIBLE);
                     animationView.setVisibility(View.GONE);
+
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
                         BillModels data = snapshot.getValue(BillModels.class);
                         list.add(0, data);
 
