@@ -27,15 +27,16 @@ import com.sslwireless.sslcommerzlibrary.viewmodel.listener.SSLCTransactionRespo
 import java.util.HashMap;
 import java.util.Map;
 
-public class PayBillActivity extends AppCompatActivity implements SSLCTransactionResponseListener {
+public class PayBillActivity extends AppCompatActivity {
 
+     // implements SSLCTransactionResponseListener
 
     // Constants for payment
-    private static final String API_KEY = "982d381360a69d419689740d9f2e26ce36fb7a50";
-    private static final String CHECKOUT_URL = "https://sandbox.uddoktapay.com/api/checkout-v2";
-    private static final String VERIFY_PAYMENT_URL = "https://sandbox.uddoktapay.com/api/verify-payment";
-    private static final String REDIRECT_URL = "https://uddoktapay.com";
-    private static final String CANCEL_URL = "https://uddoktapay.com";
+    private static final String API_KEY = "4be324433504126ddd49662efcf7f111740895b6";
+    private static final String CHECKOUT_URL = "https://payment.trodev.com/api/checkout-v2";
+    private static final String VERIFY_PAYMENT_URL = "https://payment.trodev.com/api/verify-payment";
+    private static final String REDIRECT_URL = "https://www.trodev.com";
+    private static final String CANCEL_URL = "https://www.trodev.com";
 
     // Instance variables to store payment information
     private String storedFullName;
@@ -85,7 +86,7 @@ public class PayBillActivity extends AppCompatActivity implements SSLCTransactio
         String email = emailEt.getText().toString().trim();
 
 
-/*        payBtn.setOnClickListener(new View.OnClickListener() {
+        payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -179,7 +180,7 @@ public class PayBillActivity extends AppCompatActivity implements SSLCTransactio
                 uddoktapay.loadPaymentForm(API_KEY, fullname, email, amount, CHECKOUT_URL, VERIFY_PAYMENT_URL, REDIRECT_URL, CANCEL_URL, metadataMap);
 
             }
-        });*/
+        });
 
 /*
         final SSLCommerzInitialization sslCommerzInitialization = new SSLCommerzInitialization ("trode65664972f07c1","trode65664972f07c1@ssl", amount, SSLCCurrencyType.BDT,"123456789098765", "yourProductType", SSLCSdkType.TESTBOX);
@@ -189,7 +190,7 @@ public class PayBillActivity extends AppCompatActivity implements SSLCTransactio
 */
 
 
-        payBtn.setOnClickListener(new View.OnClickListener() {
+  /*      payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -250,5 +251,7 @@ public class PayBillActivity extends AppCompatActivity implements SSLCTransactio
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+
+ }*/
     }
 }
