@@ -1,11 +1,10 @@
 package com.trodev.wifibillmanageruser;
 
-import static android.icu.number.NumberFormatter.UnitWidth.FULL_NAME;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
@@ -14,24 +13,23 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.help5g.uddoktapaysdk.UddoktaPay;
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCAdditionalInitializer;
-import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCCustomerInfoInitializer;
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization;
-import com.sslwireless.sslcommerzlibrary.model.response.SSLCTransactionInfoModel;
-import com.sslwireless.sslcommerzlibrary.model.util.SSLCCurrencyType;
-import com.sslwireless.sslcommerzlibrary.model.util.SSLCSdkType;
-import com.sslwireless.sslcommerzlibrary.view.singleton.IntegrateSSLCommerz;
-import com.sslwireless.sslcommerzlibrary.viewmodel.listener.SSLCTransactionResponseListener;
+import com.trodev.wifibillmanageruser.models.BillModels;
+import com.trodev.wifibillmanageruser.models.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class PayBillActivity extends AppCompatActivity {
-
-     // implements SSLCTransactionResponseListener
-
-    // Constants for payment
     private static final String API_KEY = "4be324433504126ddd49662efcf7f111740895b6";
     private static final String CHECKOUT_URL = "https://payment.trodev.com/api/checkout-v2";
     private static final String VERIFY_PAYMENT_URL = "https://payment.trodev.com/api/verify-payment";
@@ -65,25 +63,65 @@ public class PayBillActivity extends AppCompatActivity {
     WebView payWebView;
     TextView resultTv;
 
-    private SSLCommerzInitialization sslCommerzInitialization;
-    private SSLCAdditionalInitializer additionalInitialization;
+    DatabaseReference reference;
+    private FirebaseUser user;
+    private String userID;
+    BillModels userProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_bill);
 
+        /*textview*/
         resultTv = findViewById(R.id.resultTv);
+
+        /*edit text*/
         nameEt = findViewById(R.id.nameEt);
         emailEt = findViewById(R.id.emailEt);
         amountEt = findViewById(R.id.amountEt);
+
+        /*web view & ui layout*/
         webLayout = findViewById(R.id.webLayout);
         uiLayout = findViewById(R.id.uiLayout);
         payWebView = findViewById(R.id.payWebView);
+
+        /*button*/
         payBtn = findViewById(R.id.payBtn);
 
-        String fullname = nameEt.getText().toString().trim();
-        String email = emailEt.getText().toString().trim();
+        /*####################################################################################################################################*/
+        /*####################################################################################################################################*/
+        /*get admin info from admin user database*/
+        /*database location and get user uid*/
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        reference = FirebaseDatabase.getInstance().getReference("Users");
+        userID = user.getUid();
+
+        /*show user profile data*/
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                User userProfile = snapshot.getValue(User.class);
+
+                if (userProfile != null) {
+
+                    String u_name = userProfile.uname;
+                    String u_email = userProfile.email;
+                    String u_price = userProfile.prices;
+
+                    nameEt.setText(u_name);
+                    emailEt.setText(u_email);
+                    amountEt.setText(u_price);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(PayBillActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         payBtn.setOnClickListener(new View.OnClickListener() {
@@ -181,77 +219,5 @@ public class PayBillActivity extends AppCompatActivity {
 
             }
         });
-
-/*
-        final SSLCommerzInitialization sslCommerzInitialization = new SSLCommerzInitialization ("trode65664972f07c1","trode65664972f07c1@ssl", amount, SSLCCurrencyType.BDT,"123456789098765", "yourProductType", SSLCSdkType.TESTBOX);
-
-        final SSLCCustomerInfoInitializer customerInfoInitializer = new SSLCCustomerInfoInitializer("customer name", "customer email",
-                "address", "dhaka", "1214", "Bangladesh", "phoneNumber");
-*/
-
-
-  /*      payBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String amount = amountEt.getText().toString().trim();
-
-                if (amount.isEmpty()) {
-                    amountEt.setError("Error");
-
-                } else {
-
-                    sslSetUp(amount);
-                }
-
-            }
-        });
-
-    }
-
-    private void sslSetUp(String amount) {
-        sslCommerzInitialization = new SSLCommerzInitialization(
-                "trode65664972f07c1",
-                "trode65664972f07c1@ssl",
-                Double.parseDouble(amount),
-                SSLCCurrencyType.BDT,
-                amount,
-                "eshop",
-                SSLCSdkType.TESTBOX
-        );
-
-        additionalInitialization = new SSLCAdditionalInitializer();
-        additionalInitialization.setValueA("Value Option 1");
-        additionalInitialization.setValueB("Value Option 2");
-        additionalInitialization.setValueC("Value Option 3");
-        additionalInitialization.setValueD("Value Option 4");
-
-        IntegrateSSLCommerz.getInstance(PayBillActivity.this)
-                .addSSLCommerzInitialization(sslCommerzInitialization)
-                .addAdditionalInitializer(additionalInitialization)
-                .buildApiCall(PayBillActivity.this);
-    }
-
-
-    public void transactionSuccess(SSLCTransactionInfoModel sslcTransactionInfoModel) {
-        Toast.makeText(getApplicationContext(), "Payment success", Toast.LENGTH_SHORT).show();
-        Log.i("DONE", "Payment Done");
-    }
-
-
-    public void transactionFail(String s) {
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-    }
-
-
-    public void closed(String s) {
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-        super.onPointerCaptureChanged(hasCapture);
-
- }*/
     }
 }
